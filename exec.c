@@ -75,8 +75,10 @@ int executor(hsh *info, char **argv)
 	ssize_t read_num;
 	int i = 0, check;
 
+	info->count = 0;
 	while (1)
 	{
+		info->count++;
 		if (info->interact)
 		{
 			prompt();
