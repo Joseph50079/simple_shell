@@ -80,15 +80,19 @@ int executor(hsh *info, char **argv)
 	{
 		info->count++;
 		if (info->interact)
-		{
-			prompt();
+		{prompt();
 			fflush(stdout);
 		}
 		read_num = getline(&buffer, &n, stdin);
 		if (read_num == -1)
+<<<<<<< HEAD
 		{
 			free(buffer);
 			return (0);
+=======
+		{free(buffer);
+			return (-1);
+>>>>>>> 991fa29489166d6f58cd67b52d386e140ac2eec7
 		}
 		info->av = argv;
 		info->args = parser(buffer);
