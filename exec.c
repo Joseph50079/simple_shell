@@ -52,7 +52,8 @@ void process(hsh *info)
 	{
 		if (execve(info->path, info->args, _env(info)) == -1)
 		{
-			exit(1);
+			print_cmd_err(info);
+			return (1);
 		}
 	}
 	else
@@ -85,14 +86,9 @@ int executor(hsh *info, char **argv)
 		}
 		read_num = getline(&buffer, &n, stdin);
 		if (read_num == -1)
-<<<<<<< HEAD
 		{
 			free(buffer);
 			return (0);
-=======
-		{free(buffer);
-			return (-1);
->>>>>>> 991fa29489166d6f58cd67b52d386e140ac2eec7
 		}
 		info->av = argv;
 		info->args = parser(buffer);
