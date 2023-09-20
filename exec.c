@@ -53,7 +53,7 @@ void process(hsh *info)
 		if (execve(info->path, info->args, _env(info)) == -1)
 		{
 			print_cmd_err(info);
-			exit (127);
+			exit(127);
 		}
 	}
 	else
@@ -70,37 +70,31 @@ void process(hsh *info)
  * Return: The exit status of the last executed command or -1 on failure.
  */
 int executor(hsh *info, char **argv)
-{
-	char *buffer = NULL;
+{	char *buffer = NULL;
 	size_t n = 0;
 	ssize_t read_num;
 	int i = 0, check;
 
 	info->count = 0;
 	while (1)
-	{
-		info->count++;
+	{	info->count++;
 		if (info->interact)
-		{
-			prompt();
+		{	prompt();
 			fflush(stdout);
 		}
 		read_num = getline(&buffer, &n, stdin);
-		
+
 		if (read_num == -1)
-		{
-			free(buffer);
+		{	free(buffer);
 			if (info->interact)
-			{
-				_sputchar('\n');
+			{	_sputchar('\n');
 			}
 			return (0);
 		}
 		info->av = argv;
 		info->args = parser(buffer);
 		if (info->args[i] == NULL)
-		{
-			free_args(info->args);
+		{	free_args(info->args);
 			continue;
 		}
 		info->arg = info->args[0];
@@ -109,8 +103,7 @@ int executor(hsh *info, char **argv)
 		{
 			info->path = path_tok(info);
 			if (info->path == NULL)
-			{
-				print_cmd_err(info);
+			{	print_cmd_err(info);
 			}
 			else
 			{	process(info);
