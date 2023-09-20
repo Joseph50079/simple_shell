@@ -88,7 +88,7 @@ int executor(hsh *info, char **argv)
 		if (read_num == -1)
 		{
 			free(buffer);
-			return (-1);
+			return (0);
 		}
 		info->av = argv;
 		info->args = parser(buffer);
