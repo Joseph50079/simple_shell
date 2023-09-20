@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- * add_node - add more node
- * @head: head pointer
- * @str: string
- * Return: ptr
+ * add_node_begin - Add a new node to the beginning of a linked list.
+ * @head: A pointer to the head pointer of the list.
+ * @str: The string to be stored in the new node.
+ *
+ * Return: A pointer to the new node, or NULL on failure.
  */
-
 list_t *add_node_begin(list_t **head, const char *str)
 {
 	list_t *ptr = malloc(sizeof(list_t));
@@ -22,14 +22,13 @@ list_t *add_node_begin(list_t **head, const char *str)
 	return (ptr);
 }
 
-
 /**
- * *add_node_end - add more node
- * @head: head pointer
- * @str: string
- * Return: ptr
+ * add_node_end - Add a new node to the end of a linked list.
+ * @head: A pointer to the head pointer of the list.
+ * @str: The string to be stored in the new node.
+ *
+ * Return: A pointer to the head of the list, or NULL on failure.
  */
-
 list_t *add_node_end(list_t **head, const char *str)
 {
 	list_t *ptr = *head;
@@ -46,7 +45,6 @@ list_t *add_node_end(list_t **head, const char *str)
 	{
 		*head = temp;
 	}
-
 	else
 	{
 		while (ptr->next != NULL)
@@ -57,3 +55,4 @@ list_t *add_node_end(list_t **head, const char *str)
 	}
 	return (*head);
 }
+
