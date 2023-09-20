@@ -53,7 +53,7 @@ void process(hsh *info)
 		if (execve(info->path, info->args, _env(info)) == -1)
 		{
 			print_cmd_err(info);
-			return (1);
+			exit (127);
 		}
 	}
 	else
