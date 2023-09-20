@@ -38,6 +38,10 @@ void free_list(list_t *head)
 	head = NULL;
 }
 
+/**
+ * sh_free - Inputed in main function.
+ * @info: argument passed in.
+ */
 void sh_free(hsh *info)
 {
 	if (info->args != NULL)
