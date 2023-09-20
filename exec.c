@@ -90,6 +90,10 @@ int executor(hsh *info, char **argv)
 		if (read_num == -1)
 		{
 			free(buffer);
+			if (info->interact)
+			{
+				_sputchar('\n');
+			}
 			return (0);
 		}
 		info->av = argv;
