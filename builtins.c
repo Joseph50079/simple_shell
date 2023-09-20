@@ -11,8 +11,6 @@ int print_env(hsh *info)
 	int i = 0;
 	char *env;
 
-	/**info->env = _env(info);*/
-
 	if (info->env == NULL)
 	{
 		return (0);
