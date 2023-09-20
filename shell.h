@@ -77,6 +77,7 @@ size_t my_strlen(const char *str);
 /** function in frees.c */
 void free_args(char **);
 void free_list(list_t *head);
+void sh_free(hsh *info);
 
 /** function in strtok.c */
 char *sstrtok(char *str, char *delim);
