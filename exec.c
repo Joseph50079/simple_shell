@@ -8,7 +8,7 @@
  */
 char **parser(char *buffer)
 {
-	int i = 0, x = 0;
+	int i = 0, x = 0, j;
 	char *token, **tokenized, *delim = " \n\t ", *buf;
 
 	buf = my_strdup(buffer);
@@ -26,24 +26,26 @@ char **parser(char *buffer)
 	}
 	my_strcpy(buf, buffer);
 	token = sstrtok(buf, delim);
-
+	i = 0;
 	while (token)
 	{
-		tokenized[i] = malloc(sizeof(char) * (my_strlen(token) + 1));
-		if(tokenized[i] == NULL)
+		tokenized[i] = my_strdup(token);
+		if (tokenized[i] == NULL)
 		{
 			free(buf);
-			return(NULL);
+			for (j = 0; j < i; j++)
+			{
+				free(tokenized[j]);
+			}
+			free(tokenized);
+			return (NULL);
 		}
-		tokenized[i] = my_strdup(token);
 		token = sstrtok(NULL, delim);
 		i++;
 	}
 	tokenized[i] = NULL;
- 
-	free(buf);
-	free(token);
 
+	free(buf);
 	return (tokenized);
 }
 
@@ -90,45 +92,30 @@ int executor(hsh *info, char **argv)
 	{	info->count++;
 		if (info->interact)
 		{	prompt();
-			fflush(stdout);
-		}
+			fflush(stdout);	}
 		read_num = getline(&buffer, &n, stdin);
-
 		if (read_num == -1)
 		{	sh_free(info, 1);
 			free(buffer);
 			if (info->interact)
-			{	_sputchar('\n');
-			}
-			return (0);
-		}
+			{	_sputchar('\n');	}
+			return (0);	}
 		info->av = argv;
 		info->args = parser(buffer);
-		
- 
 		if (info->args[i] == NULL)
-		{
-			continue;
-		}
-		/**info->arg = info->args[0];*/
+		{continue;	}
 		check = builtin(info);
 		if (check == -1)
-		{
-			info->path = path_tok(info);
+		{	info->path = path_tok(info);
 			if (info->path == NULL)
-			{	print_cmd_err(info);
-			}
+			{	print_cmd_err(info);	}
 			else
 			{	process(info);
-				free(info->path);
-			}
+				free(info->path);	}
 		}	sh_free(info, 0);
 	}
 	if (buffer != NULL)
-	{
-		free(buffer);
-	}
-
+	{free(buffer);	}
 	return (0);
 }
 
@@ -152,7 +139,6 @@ char *path_tok(hsh *info)
 	{
 		return (NULL);
 	}
-
 	command = my_strdup(info->args[0]);
 	if (stat(command, &st) == 0)
 	{
@@ -178,10 +164,8 @@ char *path_tok(hsh *info)
 		token = sstrtok(NULL, ":");
 		free(name);
 	}
-
 	free(pass);
 	free(command);
-
 	return (token);
 }
 

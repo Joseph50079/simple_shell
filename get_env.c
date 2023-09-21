@@ -67,7 +67,7 @@ char *_getenv(char *path, char **envirn)
 		if (my_strcmp(var, path) == 0)
 		{
 			val = sstrtok(NULL, "=");
-			free(env_cp); 
+			free(env_cp);
 			return (val);
 		}
 		free(env_cp);
