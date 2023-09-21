@@ -7,7 +7,7 @@
  *
  * Return: The exit status of the shell.
  */
-int main(int ac, char **argv)
+int main(int ac, char **argv, char **env)
 {
 	int status;
 	hsh info[] = {INIT};
@@ -15,6 +15,8 @@ int main(int ac, char **argv)
 	int is_interactive;
 
 	is_interactive = isatty(fd);
+
+	info->envir = env;
 
 	(void)ac;
 

@@ -11,14 +11,14 @@ int print_env(hsh *info)
 	int i = 0;
 	char *env;
 
-	if (info->env == NULL)
+	if (info->envir == NULL)
 	{
 		return (0);
 	}
 
-	while (environ)
+	while (info->envir[i] != NULL)
 	{
-		env = environ[i];
+		env = info->envir[i];
 		print_str(env, 1);
 		_sputchar('\n');
 		i++;

@@ -26,14 +26,14 @@ typedef struct sh_info
 	int env_num;
 	list_t *environ;
 	char **args;
-	/*char *arg;*/
+	char **envir;
 	int interact;
 	char *path;
 	int node_len;
 	int count;
 } hsh;
 
-#define INIT {NULL, NULL, 0, NULL, NULL, 0, NULL, 0, 0}
+#define INIT {NULL, NULL, 0, NULL, NULL, NULL, 0, NULL, 0, 0}
 
 extern char **environ;
 
