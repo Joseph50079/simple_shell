@@ -17,7 +17,7 @@ int builtin(hsh *info)
 
 	while (func[i].f != NULL)
 	{
-		if (my_strcmp(func[i].str, info->arg) == 0)
+		if (my_strcmp(func[i].str, info->args[0]) == 0)
 		{
 			check = func[i].f(info);
 			return (check);

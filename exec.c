@@ -9,7 +9,7 @@
 char **parser(char *buffer)
 {
 	int i = 0, x = 0;
-	char *token, **tokenized, *delim = " \n  ", *buf;
+	char *token, **tokenized, *delim = " \n\t ", *buf;
 
 	buf = my_strdup(buffer);
 	token = sstrtok(buf, delim);
@@ -21,19 +21,28 @@ char **parser(char *buffer)
 	tokenized = malloc(sizeof(char *) * (x + 1));
 	if (tokenized == NULL)
 	{
+		free(buf);
 		return (NULL);
 	}
-	token = sstrtok(buffer, delim);
+	my_strcpy(buf, buffer);
+	token = sstrtok(buf, delim);
 
 	while (token)
 	{
 		tokenized[i] = malloc(sizeof(char) * (my_strlen(token) + 1));
+		if(tokenized[i] == NULL)
+		{
+			free(buf);
+			return(NULL);
+		}
 		tokenized[i] = my_strdup(token);
 		token = sstrtok(NULL, delim);
 		i++;
 	}
 	tokenized[i] = NULL;
+ 
 	free(buf);
+	free(token);
 
 	return (tokenized);
 }
@@ -53,6 +62,7 @@ void process(hsh *info)
 		if (execve(info->path, info->args, _env(info)) == -1)
 		{
 			print_cmd_err(info);
+			sh_free(info, 0);
 			exit(127);
 		}
 	}
@@ -85,7 +95,8 @@ int executor(hsh *info, char **argv)
 		read_num = getline(&buffer, &n, stdin);
 
 		if (read_num == -1)
-		{	free(buffer);
+		{	sh_free(info, 1);
+			free(buffer);
 			if (info->interact)
 			{	_sputchar('\n');
 			}
@@ -93,11 +104,13 @@ int executor(hsh *info, char **argv)
 		}
 		info->av = argv;
 		info->args = parser(buffer);
+		
+ 
 		if (info->args[i] == NULL)
-		{	free_args(info->args);
+		{
 			continue;
 		}
-		info->arg = info->args[0];
+		/**info->arg = info->args[0];*/
 		check = builtin(info);
 		if (check == -1)
 		{
@@ -109,8 +122,14 @@ int executor(hsh *info, char **argv)
 			{	process(info);
 				free(info->path);
 			}
-		}	free_args(info->args);
+		}	sh_free(info, 0);
 	}
+	if (buffer != NULL)
+	{
+		free(buffer);
+	}
+
+	return (0);
 }
 
 /**
@@ -159,6 +178,10 @@ char *path_tok(hsh *info)
 		token = sstrtok(NULL, ":");
 		free(name);
 	}
+
+	free(pass);
+	free(command);
+
 	return (token);
 }
 

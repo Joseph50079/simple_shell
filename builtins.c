@@ -43,7 +43,7 @@ int exit_fun(hsh *info)
 		{
 			at = info->args[1];
 			status = atoi(at);
-			free(info->arg);
+			free(info->args[0]);
 			info->path = NULL;
 		}
 

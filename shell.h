@@ -26,14 +26,14 @@ typedef struct sh_info
 	int env_num;
 	list_t *environ;
 	char **args;
-	char *arg;
+	/*char *arg;*/
 	int interact;
 	char *path;
 	int node_len;
 	int count;
 } hsh;
 
-#define INIT {NULL, NULL, 0, NULL, NULL, NULL, 0, NULL, 0, 0}
+#define INIT {NULL, NULL, 0, NULL, NULL, 0, NULL, 0, 0}
 
 extern char **environ;
 
@@ -77,7 +77,7 @@ size_t my_strlen(const char *str);
 /** function in frees.c */
 void free_args(char **);
 void free_list(list_t *head);
-void sh_free(hsh *info);
+void sh_free(hsh *info, int x);
 
 /** function in strtok.c */
 char *sstrtok(char *str, char *delim);

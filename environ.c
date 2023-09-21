@@ -15,5 +15,7 @@ void create_environ(hsh *info)
 	}
 	info->node_len = i;
 	info->environ = head;
+
+	/*free_list(head);*/
 }
 

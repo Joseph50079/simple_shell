@@ -13,8 +13,10 @@ void print_cmd_err(hsh *info)
 	print_str(": ", 2);
 	print_str(len, 2);
 	print_str(": ", 2);
-	print_str(info->arg, 2);
+	print_str(info->args[0], 2);
 	print_str(arr, 2);
+
+	free(len);
 }
 
 /**
