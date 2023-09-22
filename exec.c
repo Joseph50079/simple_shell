@@ -18,7 +18,7 @@ char **parser(char *buffer)
 		x++;
 		token = sstrtok(NULL, delim);
 	}
-	tokenized = malloc(sizeof(char *) * (x + 1));
+	tokenized = malloc(sizeof(char *) * (x));
 	if (tokenized == NULL)
 	{
 		free(buf);
@@ -37,6 +37,7 @@ char **parser(char *buffer)
 			{
 				free(tokenized[j]);
 			}
+			free(tokenized[j]);
 			free(tokenized);
 			return (NULL);
 		}
@@ -103,7 +104,10 @@ int executor(hsh *info, char **argv)
 		info->av = argv;
 		info->args = parser(buffer);
 		if (info->args[i] == NULL)
-		{continue;	}
+		{
+			free_args(info->args);
+			continue;
+		}
 		check = builtin(info);
 		if (check == -1)
 		{	info->path = path_tok(info);
@@ -149,6 +153,8 @@ char *path_tok(hsh *info)
 		name = malloc(sizeof(char) * (my_strlen(token) + 2 + i));
 		if (name == NULL)
 		{
+			free(pass);
+			free(command);
 			perror("Error allocating space\n");
 			return (NULL);
 		}
@@ -166,6 +172,7 @@ char *path_tok(hsh *info)
 	}
 	free(pass);
 	free(command);
+	/*free_args(_env(info));*/
 	return (token);
 }
 

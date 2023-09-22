@@ -15,8 +15,10 @@ void free_args(char **tokenized)
 			free(tokenized[i]);
 			i++;
 		}
+		free(tokenized[i]);
 		free(tokenized);
 	}
+	tokenized = NULL;
 }
 
 /**
@@ -48,23 +50,27 @@ void sh_free(hsh *info, int x)
 
 	if (info->args != NULL)
 	{
-
-	/*info->args[0] = NULL;*/
-	if (!x)
-	{
-
-		free_args(info->args);
+		if (!x)
+		{
+			if (info->env != NULL)
+			{
+				free_args(info->env);
+			}
+			
+			free_args(info->args);
+		}
 	}
 
-    /**free(info->path);*/
-	}
 
-
-if (x)
+	if (x)
 	{
-	/*free(info->args[0]);*/
-	free_list(info->environ);
-	free_args(info->env);
+	
+		free_list(info->environ);
+		/*if (info->env != NULL)
+		{
+			free_args(info->env);
+		}*/
+		info->envir = NULL;
 	}
 
 }

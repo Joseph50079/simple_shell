@@ -8,38 +8,37 @@
  */
 char **_env(hsh *info)
 {
-	char **temp;
-	int i = 0, j = 0;
-	list_t *ptr = NULL;
+    int i = 0, j;
+    list_t *ptr = NULL;
 
-	ptr = info->environ;
-	temp = malloc(sizeof(char *) * (info->node_len + 1));
-	if (temp == NULL)
-		return (NULL);
+    ptr = info->environ;
+    info->env = malloc(sizeof(char *) * (info->node_len ));
+    if (info->env == NULL)
+        return (NULL);
 
-	while (ptr)
-	{
-		temp[i] = malloc(sizeof(char) * (my_strlen(ptr->str) + 1));
-		if (temp[i] == NULL)
-		{
-			while (temp[j])
-			{
-				free(temp[j]);
-				j++;
-			}
-			free(temp);
-			return (NULL);
-		}
+    while (ptr)
+    {
+        info->env[i] = my_strdup(ptr->str);
+        if (info->env[i] == NULL)
+        {
+            for (j = 0; j < i; j++)
+            {
+                free(info->env[j]);
+            }
+            free(info->env[j]);
+            free(info->env);
+            return (NULL);
+        }
+        ptr = ptr->next;
+        i++;
+    }
 
-		my_strcpy(temp[i], ptr->str);
-		ptr = ptr->next;
-		i++;
-	}
-
-	temp[i] = NULL;
-	info->env = temp;
-	return (temp);
+    info->env[i] = NULL;
+	
+    return (info->env);
 }
+
+
 
 /**
  * _getenv - Get the value of an environment variable.

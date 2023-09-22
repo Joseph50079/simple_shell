@@ -6,16 +6,27 @@
  */
 void print_cmd_err(hsh *info)
 {
-	char *arr = ": not found\n";
+	char *arr = ": not found\n", *mem;
 	char *len = _itoa(info->count);
+	int i = my_strlen(info->av[0]), x = my_strlen(info->args[0]);
+	int l = my_strlen(len), a = my_strlen(arr);
 
-	print_str(info->av[0], 2);
-	print_str(": ", 2);
+	mem = malloc(sizeof(char) * (i + x + l + a + 7));
+	my_strcpy(mem, info->av[0]);
+	my_strcat(mem, ": ");
+	my_strcat(mem, len);
+	my_strcat(mem, ": ");
+	my_strcat(mem, info->args[0]);
+	my_strcat(mem, arr);
+
+	print_str(mem, 2);
+	/*print_str(": ", 2);
 	print_str(len, 2);
 	print_str(": ", 2);
 	print_str(info->args[0], 2);
-	print_str(arr, 2);
+	print_str(arr, 2);*/
 
+	free(mem);
 	free(len);
 }
 

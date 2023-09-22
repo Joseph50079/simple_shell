@@ -46,12 +46,12 @@ int exit_fun(hsh *info)
 			free(info->args[0]);
 			info->path = NULL;
 		}
+	}
 
-		if (info->environ != NULL)
-		{
-			free_list(info->environ);
-			free(info->env);
-		}
+	if (info->environ != NULL)
+	{
+		free_list(info->environ);
+		free(info->env);
 	}
 
 	exit(status);
