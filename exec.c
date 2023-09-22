@@ -146,6 +146,7 @@ char *path_tok(hsh *info)
 	command = my_strdup(info->args[0]);
 	if (stat(command, &st) == 0)
 	{
+		free(pass);
 		return (command);
 	}
 	while (token != NULL)
