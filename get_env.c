@@ -12,7 +12,7 @@ char **_env(hsh *info)
     list_t *ptr = NULL;
 
     ptr = info->environ;
-    info->env = malloc(sizeof(char *) * (info->node_len ));
+    info->env = malloc(sizeof(char *) * (info->node_len + 1));
     if (info->env == NULL)
         return (NULL);
 

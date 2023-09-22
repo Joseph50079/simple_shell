@@ -18,7 +18,7 @@ char **parser(char *buffer)
 		x++;
 		token = sstrtok(NULL, delim);
 	}
-	tokenized = malloc(sizeof(char *) * (x));
+	tokenized = malloc(sizeof(char *) * (x + 1));
 	if (tokenized == NULL)
 	{
 		free(buf);
@@ -141,13 +141,17 @@ char *path_tok(hsh *info)
 	token = sstrtok(pass, ":");
 	if (path == NULL)
 	{
+		free(pass);
 		return (NULL);
 	}
-	command = my_strdup(info->args[0]);
-	if (stat(command, &st) == 0)
+	if (info->args[0] != NULL)
 	{
-		free(pass);
-		return (command);
+		command = my_strdup(info->args[0]);
+		if (stat(command, &st) == 0)
+		{
+			free(pass);
+			return (command);
+		}
 	}
 	while (token != NULL)
 	{
