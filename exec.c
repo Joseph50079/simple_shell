@@ -135,15 +135,16 @@ char *path_tok(hsh *info)
 	char *token, *name;
 	int i = my_strlen(info->args[0]);
 	struct stat st;
+	char **env = _env(info);
 
-	path = _getenv("PATH", _env(info));
-	pass = my_strdup(path);
-	token = sstrtok(pass, ":");
+	path = getenv("PATH");
 	if (path == NULL)
 	{
-		free(pass);
 		return (NULL);
 	}
+
+	pass = strdup(path);
+	token = sstrtok(pass, ":");
 	if (info->args[0] != NULL)
 	{
 		command = my_strdup(info->args[0]);

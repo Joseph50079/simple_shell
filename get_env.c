@@ -60,7 +60,7 @@ char *_getenv(char *path, char **envirn)
 
 	for (i = 0; envirn[i] != NULL; i++)
 	{
-		env_cp = my_strdup(envirn[i]);
+		env_cp = strdup(envirn[i]);
 
 		var = sstrtok(env_cp, "=");
 		if (my_strcmp(var, path) == 0)
@@ -73,4 +73,3 @@ char *_getenv(char *path, char **envirn)
 	}
 	return (val);
 }
-
