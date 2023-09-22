@@ -135,7 +135,7 @@ char *path_tok(hsh *info)
 	char *token, *name;
 	int i = my_strlen(info->args[0]);
 	struct stat st;
-	char **env = _env(info);
+
 
 	path = getenv("PATH");
 	if (path == NULL)
