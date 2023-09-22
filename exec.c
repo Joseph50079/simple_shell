@@ -108,6 +108,7 @@ int executor(hsh *info, char **argv)
 			free_args(info->args);
 			continue;
 		}
+		free(buffer);
 		check = builtin(info);
 		if (check == -1)
 		{	info->path = path_tok(info);
@@ -143,7 +144,7 @@ char *path_tok(hsh *info)
 		return (NULL);
 	}
 
-	pass = strdup(path);
+	pass = my_strdup(path);
 	token = sstrtok(pass, ":");
 	if (info->args[0] != NULL)
 	{

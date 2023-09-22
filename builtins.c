@@ -43,17 +43,19 @@ int exit_fun(hsh *info)
 		{
 			at = info->args[1];
 			status = atoi(at);
-			free(info->args[0]);
+			free_args(info->args);
 			info->path = NULL;
+			sh_free(info, 1);
 		}
 	}
-
-	if (info->environ != NULL)
+	
+	else
 	{
-		free_list(info->environ);
-		free(info->env);
+		sh_free(info, 0);
+		sh_free(info, 1);
 	}
 
+	
 	exit(status);
 }
 
