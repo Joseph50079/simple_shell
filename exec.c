@@ -108,19 +108,17 @@ int executor(hsh *info, char **argv)
 			free_args(info->args);
 			continue;
 		}
-		free(buffer);
+		if (buffer == NULL)
+			free(buffer);
 		check = builtin(info);
 		if (check == -1)
-		{	info->path = path_tok(info);
-			if (info->path == NULL)
-			{	print_cmd_err(info);	}
-			else
-			{	process(info);
-				free(info->path);	}
-		}	sh_free(info, 0);
+		{
+			locate_cmd(info);
+		}
+		sh_free(info, 0);
 	}
 	if (buffer != NULL)
-	{free(buffer);	}
+		free(buffer);
 	return (0);
 }
 
@@ -179,7 +177,24 @@ char *path_tok(hsh *info)
 	}
 	free(pass);
 	free(command);
-	/*free_args(_env(info));*/
 	return (token);
 }
 
+/**
+ * locate_cmd - locate s and executes command
+ * @info: shell struct variable ptr
+ */
+
+void locate_cmd(hsh *info)
+{
+	info->path = path_tok(info);
+	if (info->path == NULL)
+	{
+		print_cmd_err(info);
+	}
+	else
+	{
+		process(info);
+		free(info->path);
+	}
+}

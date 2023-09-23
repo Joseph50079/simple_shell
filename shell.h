@@ -51,6 +51,7 @@ char **parser(char *buffer);
 int executor(hsh *, char **);
 void process(hsh *);
 char *path_tok(hsh *);
+void locate_cmd(hsh *info);
 
 /* functions in environ.c */
 void create_environ(hsh *);

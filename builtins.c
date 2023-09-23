@@ -51,8 +51,12 @@ int exit_fun(hsh *info)
 	
 	else
 	{
-		sh_free(info, 0);
-		sh_free(info, 1);
+		if (info->args != NULL)
+		{
+			sh_free(info, 0);
+			sh_free(info, 1);
+		}
+		
 	}
 
 	
