@@ -66,10 +66,6 @@ void sh_free(hsh *info, int x)
 	{
 	
 		free_list(info->environ);
-		/*if (info->env != NULL)
-		{
-			free_args(info->env);
-		}*/
 		info->envir = NULL;
 	}
 

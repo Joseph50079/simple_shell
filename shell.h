@@ -31,9 +31,10 @@ typedef struct sh_info
 	char *path;
 	int node_len;
 	int count;
+	char **buffer;
 } hsh;
 
-#define INIT {NULL, NULL, 0, NULL, NULL, NULL, 0, NULL, 0, 0}
+#define INIT {NULL, NULL, 0, NULL, NULL, NULL, 0, NULL, 0, 0, NULL}
 
 extern char **environ;
 

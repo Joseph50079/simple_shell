@@ -95,6 +95,7 @@ int executor(hsh *info, char **argv)
 		{	prompt();
 			fflush(stdout);	}
 		read_num = getline(&buffer, &n, stdin);
+		info->buffer = &buffer;
 		if (read_num == -1)
 		{	sh_free(info, 1);
 			free(buffer);
@@ -108,14 +109,14 @@ int executor(hsh *info, char **argv)
 			free_args(info->args);
 			continue;
 		}
-		if (buffer == NULL)
-			free(buffer);
+		
 		check = builtin(info);
 		if (check == -1)
 		{
 			locate_cmd(info);
 		}
 		sh_free(info, 0);
+		
 	}
 	if (buffer != NULL)
 		free(buffer);
@@ -135,7 +136,14 @@ char *path_tok(hsh *info)
 	int i = my_strlen(info->args[0]);
 	struct stat st;
 
-
+	if (info->args[0] != NULL)
+	{
+		command = my_strdup(info->args[0]);
+		if (stat(command, &st) == 0)
+		{
+			return (command);
+		}
+	}
 	path = getenv("PATH");
 	if (path == NULL)
 	{
@@ -144,15 +152,7 @@ char *path_tok(hsh *info)
 
 	pass = my_strdup(path);
 	token = sstrtok(pass, ":");
-	if (info->args[0] != NULL)
-	{
-		command = my_strdup(info->args[0]);
-		if (stat(command, &st) == 0)
-		{
-			free(pass);
-			return (command);
-		}
-	}
+	
 	while (token != NULL)
 	{
 		name = malloc(sizeof(char) * (my_strlen(token) + 2 + i));

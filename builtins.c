@@ -43,6 +43,7 @@ int exit_fun(hsh *info)
 		{
 			at = info->args[1];
 			status = atoi(at);
+			free(*info->buffer);
 			free_args(info->args);
 			info->path = NULL;
 			sh_free(info, 1);
@@ -53,6 +54,7 @@ int exit_fun(hsh *info)
 	{
 		if (info->args != NULL)
 		{
+			free(*info->buffer);
 			sh_free(info, 0);
 			sh_free(info, 1);
 		}
